@@ -15,7 +15,7 @@
     font-family: 'Source Sans Pro', sans-serif;
   }
 </style>
-<title>CS 184 Mesh Editor</title>
+<title>CS 184 Cloth Simulator</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro" rel="stylesheet">
 </head>
@@ -25,17 +25,575 @@
 
 <h1 align="middle">CS 184: Computer Graphics and Imaging, Spring 2017</h1>
 <h1 align="middle">Project 4: Cloth Simulator</h1>
-<h2 align="middle">YOUR NAME, CS184-??</h2>
+<h2 align="middle">Shenao Zhang</h2>
 
 <br><br>
 
 <div>
 
 <h2 align="middle">Overview</h2>
-<p>Give a high-level overview of what you implemented in this project. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the project.</p>
+<p>In this project, we will simulate the real world using physical knowledge, like simulate the forces caused by spring, gravity mainly using Newton's law. Then to better simulate the real world, we handle the cases that the cloth collisions with other objects and self-collisions. Then we can get the movement in these cases correct.Then we want to create different lighting and material effects. We implement different shaders to get the different material.
+</p>
+<h2 align="middle">Part 1: Masses and springs</h2>
+To simulate the colth, we can divide the cloth up into evenly spaced point masses and then connect nearby masses with springs. In this part, we will build a grid of masses and springs.<br>
+To create an evenly spaced grid of masses, we have two types of the cloth's orientation: HORIZONTAL and VERTICAL. For different orientations, we generate different point masses.<br>
+Then create springs to apply the structual, shea, and bending constraints between point masses. <br>
+After implementing these, we can get the following results.
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/all2.png" align="middle" width="1000px"/>
+        <figcaption align="middle">screenshots of scene/pinned2.json</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/all.png" align="middle" width="1000px"/>
+        <figcaption align="middle">screenshots of scene/pinned2.json</figcaption>
+      </td>
+    </tr>
+  </table>
+</div><br>
+Now let me show what the wireframe looks like with different constraints.
+  <div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/shear.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with only shearing constraints</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/without_shear.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json without any shearing constraints</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/all.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with all constraints</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
 
-<h2 align="middle">Part I: Masses and springs</h2>
+
+<h2 align="middle">Part 2: Simulation via numerical integration</h2>
+In the last part, we have set up the cloth model as a system of masses and springs, in this part, what we mainly do is to simulate via numerical integration according to the physical equations of motion in order to apply the forces on our cloth's point masses to figure out how they move from one time step to the next.<br>
+For each point mass, we have external forces (such as gravity) which uniformly affect the cloth. For each spring, we have spring correction forces which apply the spring constraints from before to keep the cloth together.<br>
+Then we use Verlet integration as follows to compute new point mass positions.
+        <div align="center">
+            <table style="width=100%">
+                <tr>
+                    <td align="middle">
+                    <img src="images/gs1.png" width="240px" />
+                </tr>
+            </table>
+        </div><br>
+Then, to help keep springs from being unreasonably deformed during each time step, we will implement an additional feature on deformation constraints in mass-spring models. For each spring, apply this constraint by correcting the two point masses' positions such that the spring's length is at most 10% greater than its rest_length at the end of any time step. <br>
+After implementing these, we have the following results. Now we will observe the differences when changing the parameters. 
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/frame.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json, default settings, wireframe. (ks=5000, density=15, damping=0.2)</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/normal.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json, default settings, normal. (ks=5000, density=15, damping=0.2)</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/small_ks_frame.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with small ks, ks=50, wireframe.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/small_ks.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with small ks, ks=50, normal.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/large_ks_frame.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with large ks, ks=20000, wireframe.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/large_ks.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with large ks, ks=20000, normal.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+As we can see, with smaller ks, the cloth is more stretched, especially for the pinned top of the cloth; with larger ks, the cloth is more flat. This is because we have the same external force, which is caused by gravity, so to balance this external force, with smaller ks, we need to stretch the springs more to get balance. With larger ks, we don't need to stretch the springs that much, which causes that the cloth lokes flat.<br>
 
 
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/small_density.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with small density, density=5.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/large_density.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with large density, density=50.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+As we can see, with smaller density, the cloth looks flat, while with larger density, the cloth is more stretched at the top of the cloth. Since when the density is large, the external forces caused by gravity increase accordingly. To balance this force, we need stretch the springs more. With small density, the springs will stretch less. So this is what we expected.<br>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/small_damping_frame.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with small damping, damping=0.08, wireframe.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/small_damping.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with small damping, damping=0.08, normal.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/large_damping_frame.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with large damping, damping=0.7, wireframe.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/large_damping.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned2.json with large damping, damping=0.7, normal.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+The difference between different damping is that with larger damping, the cloth takes less time to move and stay oscillated, with smaller damping, it will take more time to get to balance. This is because when damping is big, the energy will lose quickly, thus it will take a short time to get to balance. i.e. less time to move and stay oscillated.<br>
+<br>
+Then let me show what it looks like when pin the four corners. The results are as follows:
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/pin_4.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned4.json</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/pin_4_2.png" align="middle" width="1000px"/>
+        <figcaption align="middle">scene/pinned4.json</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<h2 align="middle">Part 3: Handling collisions with other objects</h2>
+In this part, we add support for cloth collision with other objects in the scene to make things more interesting.<br>
+First, we handle collisions with spheres. The main idea here is if the point mass intersects with or is inside the sphere, then "bump" it up to the surface of the sphere.<br>
+Here are some results screenshots:<br>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/sphere_frame.png" align="middle" width="1000px"/>
+        <figcaption align="middle">Collisions with spheres with default ks = 5000.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/sphere.png" align="middle" width="1000px"/>
+        <figcaption align="middle">Collisions with spheres with default ks = 5000.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/sphere_small.png" align="middle" width="1000px"/>
+        <figcaption align="middle">Collisions with spheres with small ks=500.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/sphere_large.png" align="middle" width="1000px"/>
+        <figcaption align="middle">Collisions with spheres with large ks=50000.</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+We can see that there are differences when ks are different. When ks is larger, the cloth is spreaded out and when ks is smaller, the cloth is closer to the sphere compared to the large ks. This is because if we want to balance the force caused by gravity, when ks is large, the cloth can spread out to keep balance.
+
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/plane.png" align="middle" width="1000px"/>
+        <figcaption align="middle">cloth lying on the plane</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/plane2.png" align="middle" width="1000px"/>
+        <figcaption align="middle">cloth lying on the plane</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+
+
+<h2 align="middle">Part 4: Handling self-collisions</h2>
+If we have a scene in which the cloth falls on itself or otherwise folds on itself, the cloth will clip through and behave strangely. The naive method of handling this is to loop through all pairs of point masses, compute the distance between them, and then apply a modifying force to the two point masses if they are within some threshold distance apart. However, this will take a long time. In this part, what we do is to implement spatial hashing. At each time step, we build a hash table that maps a float to a mass position. Then we only need linear time to handle this.<br>
+Some screenshots that record how the cloth falls and folds on itself are as follows:<br>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/self_1.png" align="middle" width="1000px"/>
+        <figcaption align="middle">Cloth falls and folds on itself (begin).</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/self_2.png" align="middle" width="1000px"/>
+        <figcaption align="middle">Cloth falls and folds on itself (middle).</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/self_3.png" align="middle" width="1000px"/>
+        <figcaption align="middle">Cloth falls and folds on itself (end).</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+Now let me show how <b>density</b> and <b>ks</b> affect this process.<br>
+First when we use different <b>density</b>, the results are as follows:<br>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/dens.png" align="middle" width="1000px"/>
+        <figcaption align="middle">When density is small (5).</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/denl.png" align="middle" width="1000px"/>
+        <figcaption align="middle">When density is large (50).</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+As we can see, when density is small, the cloth is more spreaded out, when density is large, the cloth is more likely to fold into itself. This is because when density is small, mass will also decrease, which increases our accelerations back in integration in part 2 and change the spring forces, thus spreading out.<br>
+Then when we use different <b>ks</b>, the results are as follows:<br>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/ksmall.png" align="middle" width="1000px"/>
+        <figcaption align="middle">When ks is small (500).</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/klarge.png" align="middle" width="1000px"/>
+        <figcaption align="middle">When ks is large (20000).</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+We can see that with small ks, the cloth has more wrinkle. With large ks, the cloth is more flat. This is because that ks controls the stretchiness of the cloth.
+<h2 align="middle">Part 5: Shaders</h2>
+Shader programs are isolated programs that run in parallel on GPU. It takes in vertices in 3D space as input and output the pixel values in the image. In this part, we use GLSL to write code of our shaders to create lighting and material effects.<br>
+We will be dealing with two basic OpenGL shader types:<b>vertex shaders</b>, <b>fragment shaders</b>. Vertex shaders generally apply transforms to vertices, modifying their geometric properties like position and normal vectors, writing the final position of the vertex to gl_Position in addition to writing varyings for use in the fragment shader. Then the fragment shaders take in geometric attributes of the fragment calculated by the vertex shaders, compute and write a color into out_color. This more straightforward in rasterization pipeline. After vertex shaders, we have vertices and triangles positioned in screen space. Then the fragment shaders take the fragment input to calculate the pixel valuesin the image.<br>
+Now let me show some of different lighting and material effects.<br>
+The first one is <b>diffuse shading</b>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/diffuse.png" align="middle" width="1000px"/>
+        <figcaption align="middle">diffuse shading</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+Then I implement Blinn-Phong shading. Blinn-Phong contains three parts: ambient component, diffuse component and specular component. The diffuse part is the same as last task, and ambient component is a constant vertor which light all parts of the object using the same component and doesn't depend on anything. Specular component contains the information that how close you are to the mirror reflect direction. The final result is as follows.
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/phong.png" align="middle" width="1000px"/>
+        <figcaption align="middle">Blinn-Phong shading</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+To compare the effect of ambient component, diffuse component and specular component, the following screenshots are using each component.
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/di.png" align="middle" width="1000px"/>
+        <figcaption align="middle">only use diffuse component</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/s.png" align="middle" width="1000px"/>
+        <figcaption align="middle">only use specular component</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/a.png" align="middle" width="1000px"/>
+        <figcaption align="middle">onlu use ambient component</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+Then let me show two screenshots that use different texture.
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/texture.png" align="middle" width="1000px"/>
+        <figcaption align="middle">amazing!</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/texture2.png" align="middle" width="1000px"/>
+        <figcaption align="middle">the monsters</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+Then let me show bump mapping:
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/bump.png" align="middle" width="1000px"/>
+        <figcaption align="middle">bump mapping</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+Here is displacement mapping:
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/displacement.png" align="middle" width="1000px"/>
+        <figcaption align="middle">displacement mapping</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+The main idea of bump mapping is given a vector in object space, we can transform it into back into model space by multiplying by the tangent-bitangent-normal (TBN) matrix. And TBN=[t b n], where t is the tangent vector, n is normal vector, b=cross_product(n,t). And the main idea of displacement mapping is to displace the vertex positions in the direction of the original model space vertex normal scaled by the u_height_scaling variable based on bump mapping.<br>
+As we can see, bump mapping looks like generating bumps and displacement mapping displaces some of the material.<br>
+When using -o 16 -a 16, I get the following results:
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/bs.png" align="middle" width="1000px"/>
+        <figcaption align="middle">bump mapping with -o 16 -a 16</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/a1.png" align="middle" width="1000px"/>
+        <figcaption align="middle">bump mapping with -o 16 -a 16</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/ds.png" align="middle" width="1000px"/>
+        <figcaption align="middle">displacement mapping with -o 16 -a 16</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/a3.png" align="middle" width="1000px"/>
+        <figcaption align="middle">displacement mapping with -o 16 -a 16</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+When using -o 128 -a 128, I get the following results:
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/bl.png" align="middle" width="1000px"/>
+        <figcaption align="middle">bump mapping with -o 128 -a 128</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/a2.png" align="middle" width="1000px"/>
+        <figcaption align="middle">bump mapping with -o 128 -a 128</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/dl.png" align="middle" width="1000px"/>
+        <figcaption align="middle">displacement mapping with -o 128 -a 128</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/a4.png" align="middle" width="1000px"/>
+        <figcaption align="middle">displacement mapping with -o 16 -a 16</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
+Then I implement environment-mapped reflections. Here is the result:
+<div align="middle">
+  <table style="width=100%">
+    <tr>
+      <td>
+        <img src="images/mirror.png" align="middle" width="1000px"/>
+        <figcaption align="middle">environment-mapped reflections</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
 </body>
 </html>
