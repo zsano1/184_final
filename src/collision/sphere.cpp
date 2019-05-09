@@ -9,13 +9,12 @@ using namespace CGL;
 
 void Sphere::collide(PointMass &pm) {
   // TODO (Part 3): Handle collisions with spheres.
-  Vector3D dir=pm.position-origin;
-  double distance=dir.norm();
-  if(distance<=radius){
-    dir.normalize();
-    Vector3D correct_pos=origin+dir*radius;
-    Vector3D correction=correct_pos-pm.last_position;
-    pm.position=correction*(1.0-friction)+pm.last_position;
+  Vector3D direction = pm.position - origin;
+  direction.normalize();
+  double length = (pm.position - origin).norm();
+  if (length <= radius) {
+    Vector3D vector = origin + direction * radius - pm.last_position;
+    pm.position = pm.last_position + (1.0 - friction) * vector;
   }
 }
 
@@ -23,4 +22,20 @@ void Sphere::render(GLShader &shader) {
   // We decrease the radius here so flat triangles don't behave strangely
   // and intersect with the sphere when rendered
   m_sphere_mesh.draw_sphere(shader, origin, radius * 0.92);
+}
+
+MatrixXf Sphere::get_normals() {
+  return m_sphere_mesh.get_normals();
+}
+
+MatrixXf Sphere::get_position() {
+  return m_sphere_mesh.get_positions();
+}
+
+Vector3D Sphere::get_origin() {
+  return origin;
+}
+
+double Sphere::get_radius() {
+  return radius;
 }

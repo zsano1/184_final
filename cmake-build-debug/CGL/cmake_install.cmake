@@ -1,8 +1,8 @@
-# Install script for directory: /home/shenao/homework/cs184/p4-clothsim-zsano1/CGL
+# Install script for directory: /home/shenao/osm-bundler/p4-clothsim-zsano1/CGL
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/shenao/homework/cs184/p4-clothsim-zsano1/CGL")
+  set(CMAKE_INSTALL_PREFIX "/home/shenao/osm-bundler/p4-clothsim-zsano1/CGL")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/CGL/src/cmake_install.cmake")
+  include("/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/CGL/src/cmake_install.cmake")
 
 endif()
 

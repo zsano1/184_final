@@ -17,49 +17,49 @@ option(BUILD_DOCS      "Build documentation"          OFF)
 ###################
 if(APPLE)
 
-  # OSX Framework dependencies
-  if(NOT BUILD_LIBCGL)
-    include_directories( "/System/Library/Frameworks" )
-    find_library (COCOA_LIBRARIES Cocoa)
-    find_library (IOKIT_LIBRARIES IOkit)
-    find_library (COREVIDEO_LIBRARIES CoreVideo)
-  endif()
+    # OSX Framework dependencies
+    if(NOT BUILD_LIBCGL)
+        include_directories( "/System/Library/Frameworks" )
+        find_library (COCOA_LIBRARIES Cocoa)
+        find_library (IOKIT_LIBRARIES IOkit)
+        find_library (COREVIDEO_LIBRARIES CoreVideo)
+    endif()
 
-  # Clang configuration
-  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    # Clang configuration
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
 
-    set(CLANG_CXX_FLAGS "-std=c++11 -m64")
+        set(CLANG_CXX_FLAGS "-std=c++11 -m64")
 
-    if(BUILD_DEBUG)
-      set(CMAKE_BUILD_TYPE Debug)
-      set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -g")
-    else(BUILD_DEBUG)
-      set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -O3")
-      set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -funroll-loops")
-      set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -Wno-narrowing")
-      set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -Wno-deprecated-register")
-    endif(BUILD_DEBUG)
+        if(BUILD_DEBUG)
+            set(CMAKE_BUILD_TYPE Debug)
+            set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -g")
+        else(BUILD_DEBUG)
+            set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -O3")
+            set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -funroll-loops")
+            set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -Wno-narrowing")
+            set(CLANG_CXX_FLAGS "${CLANG_CXX_FLAGS} -Wno-deprecated-register")
+        endif(BUILD_DEBUG)
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CLANG_CXX_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CLANG_CXX_FLAGS}")
 
-  endif()
+    endif()
 
-  # GCC configuration
-  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    # GCC configuration
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-    set(GCC_CXX_FLAGS "-std=gnu++11 -m64")
+        set(GCC_CXX_FLAGS "-std=gnu++11 -m64")
 
-    if(BUILD_DEBUG)
-      set(CMAKE_BUILD_TYPE Debug)
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -g")
-    else(BUILD_DEBUG)
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -O3")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -fopenmp")
-    endif(BUILD_DEBUG)
+        if(BUILD_DEBUG)
+            set(CMAKE_BUILD_TYPE Debug)
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -g")
+        else(BUILD_DEBUG)
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -O3")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -fopenmp")
+        endif(BUILD_DEBUG)
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_CXX_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_CXX_FLAGS}")
 
-  endif()
+    endif()
 
 endif(APPLE)
 
@@ -68,41 +68,41 @@ endif(APPLE)
 ##################
 if(UNIX AND NOT APPLE)
 
-  # GCC only
-  if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+    # GCC only
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
-    set(GCC_CXX_FLAGS "-std=gnu++11 -m64")
-    set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -Wno-deprecated-declarations")
-    set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -Wno-misleading-indentation")
+        set(GCC_CXX_FLAGS "-std=gnu++11 -m64")
+        set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -Wno-deprecated-declarations")
+        set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -Wno-misleading-indentation")
 
-    # X11 Dependencies
-    if(NOT BUILD_LIBCGL)
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXi")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXxf86vm")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXinerama")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXcursor")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXfixes")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXrandr")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXext")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXrender")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lX11")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lpthread")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lxcb")
-      set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXau")
+        # X11 Dependencies
+        if(NOT BUILD_LIBCGL)
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXi")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXxf86vm")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXinerama")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXcursor")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXfixes")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXrandr")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXext")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXrender")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lX11")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lpthread")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lxcb")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -lXau")
+        endif()
+
+        # Debug configuration
+        if(BUILD_DEBUG)
+            set(CMAKE_BUILD_TYPE Debug)
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -g")
+        else(BUILD_DEBUG)
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -O3")
+            set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -fopenmp")
+        endif(BUILD_DEBUG)
+
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_CXX_FLAGS}")
+
     endif()
-
-    # Debug configuration
-    if(BUILD_DEBUG)
-        set(CMAKE_BUILD_TYPE Debug)
-        set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -g")
-    else(BUILD_DEBUG)
-        set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -O3")
-        set(GCC_CXX_FLAGS "${GCC_CXX_FLAGS} -fopenmp")
-    endif(BUILD_DEBUG)
-
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GCC_CXX_FLAGS}")
-
-  endif()
 
 endif()
 
@@ -111,41 +111,41 @@ endif()
 ####################
 if(WIN32)
 
-  # EIGEN fix:
-  # See "Cause 4" here:
-  # https://eigen.tuxfamily.org/dox/group__TopicUnalignedArrayAssert.html
+    # EIGEN fix:
+    # See "Cause 4" here:
+    # https://eigen.tuxfamily.org/dox/group__TopicUnalignedArrayAssert.html
 
-  # NOTE: future maintainers, you may want to use add_compile_definitions instead.
-  # this was added because too many students are using old CMake (<3.12) versions.
-  add_definitions(/DEIGEN_DONT_ALIGN)
+    # NOTE: future maintainers, you may want to use add_compile_definitions instead.
+    # this was added because too many students are using old CMake (<3.12) versions.
+    add_definitions(/DEIGEN_DONT_ALIGN)
 
-  if(MSVC)
+    if(MSVC)
 
-    set(MSVC_CXX_FLAGS "-std=gnu++11")
+        set(MSVC_CXX_FLAGS "-std=gnu++11")
 
-    if(BUILD_DEBUG)
-        set(CMAKE_BUILD_TYPE Debug)
-    else(BUILD_DEBUG)
-        set(CMAKE_BUILD_TYPE Release)
-    endif(BUILD_DEBUG)
+        if(BUILD_DEBUG)
+            set(CMAKE_BUILD_TYPE Debug)
+        else(BUILD_DEBUG)
+            set(CMAKE_BUILD_TYPE Release)
+        endif(BUILD_DEBUG)
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MSVC_CXX_FLAGS}")
-    
-  endif(MSVC)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MSVC_CXX_FLAGS}")
 
-  if(MINGW)
+    endif(MSVC)
 
-    set(MSVC_CXX_FLAGS "-std=gnu++11")
+    if(MINGW)
 
-    if(BUILD_DEBUG)
-        set(CMAKE_BUILD_TYPE Debug)
-    else(BUILD_DEBUG)
-        set(CMAKE_BUILD_TYPE Release)
-    endif(BUILD_DEBUG)
+        set(MSVC_CXX_FLAGS "-std=gnu++11")
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MSVC_CXX_FLAGS}")
+        if(BUILD_DEBUG)
+            set(CMAKE_BUILD_TYPE Debug)
+        else(BUILD_DEBUG)
+            set(CMAKE_BUILD_TYPE Release)
+        endif(BUILD_DEBUG)
 
-  endif(MINGW)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MSVC_CXX_FLAGS}")
+
+    endif(MINGW)
 
 endif(WIN32)
 
@@ -173,12 +173,12 @@ set_property(TARGET glfw glfw_objects nanogui PROPERTY FOLDER "dependencies")
 # In the interest of avoiding the flood of Piazza posts inquiring about this,
 # we take the more robust route.
 if(WIN32)
-  # Also worth mentioning is that since NANOGUI produces a DLL on windows,
-  # it is considered a "RUNTIME" and not a "LIBRARY" target according to CMake.
-  # See https://cmake.org/cmake/help/v3.0/prop_tgt/RUNTIME_OUTPUT_DIRECTORY.html
-  # > For DLL platforms the DLL part of a shared library is treated as a runtime target
-  set_target_properties(nanogui PROPERTIES
-        RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+    # Also worth mentioning is that since NANOGUI produces a DLL on windows,
+    # it is considered a "RUNTIME" and not a "LIBRARY" target according to CMake.
+    # See https://cmake.org/cmake/help/v3.0/prop_tgt/RUNTIME_OUTPUT_DIRECTORY.html
+    # > For DLL platforms the DLL part of a shared library is treated as a runtime target
+    set_target_properties(nanogui PROPERTIES
+            RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 endif(WIN32)
 
 #-------------------------------------------------------------------------------
@@ -189,15 +189,15 @@ endif(WIN32)
 find_package(OpenGL REQUIRED)
 find_package(Threads REQUIRED)
 if(NOT WIN32)
-  find_package(Freetype REQUIRED)
+    find_package(Freetype REQUIRED)
 endif()
 
 # CGL
 if(BUILD_LIBCGL)
-  add_subdirectory(CGL)
-  include_directories(CGL/include)
+    add_subdirectory(CGL)
+    include_directories(CGL/include)
 else(BUILD_LIBCGL)
-  find_package(CGL REQUIRED)
+    find_package(CGL REQUIRED)
 endif(BUILD_LIBCGL)
 
 #-------------------------------------------------------------------------------
@@ -207,10 +207,10 @@ add_subdirectory(src)
 
 # build documentation
 if(BUILD_DOCS)
-  find_package(DOXYGEN)
-  if(DOXYGEN_FOUND AND BUILD_DOCS)
-    add_subdirectory(docs)
-  endif()
+    find_package(DOXYGEN)
+    if(DOXYGEN_FOUND AND BUILD_DOCS)
+        add_subdirectory(docs)
+    endif()
 endif()
 
 # Install settings

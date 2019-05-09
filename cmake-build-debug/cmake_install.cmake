@@ -1,8 +1,8 @@
-# Install script for directory: /home/shenao/homework/cs184/p4-clothsim-zsano1
+# Install script for directory: /home/shenao/osm-bundler/p4-clothsim-zsano1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/shenao/homework/cs184/p4-clothsim-zsano1/")
+  set(CMAKE_INSTALL_PREFIX "/home/shenao/osm-bundler/p4-clothsim-zsano1/")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,9 +39,9 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/cmake_install.cmake")
-  include("/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/CGL/cmake_install.cmake")
-  include("/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/cmake_install.cmake")
+  include("/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/cmake_install.cmake")
+  include("/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/CGL/cmake_install.cmake")
+  include("/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/cmake_install.cmake")
 
 endif()
 
@@ -53,5 +53,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

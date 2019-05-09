@@ -1,4 +1,4 @@
-# Install script for directory: /home/shenao/homework/cs184/p4-clothsim-zsano1/ext/nanogui
+# Install script for directory: /home/shenao/osm-bundler/p4-clothsim-zsano1/ext/nanogui
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/cmake_install.cmake")
+  include("/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/cmake_install.cmake")
 
 endif()
 

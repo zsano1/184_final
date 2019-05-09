@@ -12,16 +12,21 @@ using namespace std;
 
 struct Plane : public CollisionObject {
 public:
-  Plane(const Vector3D &point, const Vector3D &normal, double friction)
-      : point(point), normal(normal.unit()), friction(friction) {}
+    Plane(const Vector3D &point, const Vector3D &normal, double friction)
+            : point(point), normal(normal.unit()), friction(friction) {}
 
-  void render(GLShader &shader);
-  void collide(PointMass &pm);
+    void render(GLShader &shader);
+    void collide(PointMass &pm);
+    MatrixXf get_position();
+    MatrixXf get_normals();
+    Vector3D get_origin();
+    double get_radius();
+    MatrixXf positions;
+    MatrixXf normals;
+    Vector3D point;
+    Vector3D normal;
 
-  Vector3D point;
-  Vector3D normal;
-
-  double friction;
+    double friction;
 };
 
 #endif /* COLLISIONOBJECT_PLANE_H */

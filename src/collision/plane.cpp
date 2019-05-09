@@ -3,7 +3,6 @@
 
 #include "../clothMesh.h"
 #include "../clothSimulator.h"
-#include "../leak_fix.h"
 #include "plane.h"
 
 using namespace std;
@@ -13,15 +12,19 @@ using namespace CGL;
 
 void Plane::collide(PointMass &pm) {
   // TODO (Part 3): Handle collisions with planes.
-  Vector3D now=pm.position-point;
-  Vector3D last=pm.last_position-point;
-  double dot_product=(dot(now,normal)*dot(last,normal));
-  if(dot_product<=0){
-    normal.normalize();
-    double s=dot(normal,-now);
-    Vector3D correct_pos=pm.position+s*normal;
-    Vector3D correction=correct_pos-pm.last_position;
-    pm.position=correction*(1.0-friction)+pm.last_position+normal*SURFACE_OFFSET;
+  Vector3D vector_new = pm.position - point;
+  Vector3D vector_last = pm.last_position - point;
+  if (dot(vector_new, normal) * dot(vector_last, normal) <= 0) {
+    Vector3D unit = normal.unit();
+    Vector3D tangent = pm.position - dot(unit, vector_new) * unit;
+    Vector3D vector;
+    if (dot(vector_last, normal) < 0) {
+      vector = tangent - normal * SURFACE_OFFSET - pm.last_position;
+    }
+    else {
+      vector = tangent + normal * SURFACE_OFFSET - pm.last_position;
+    }
+    pm.position = pm.last_position + (1.0 - friction) * vector;
   }
 }
 
@@ -35,8 +38,8 @@ void Plane::render(GLShader &shader) {
   sParallel.normalize();
   Vector3f sCross = sNormal.cross(sParallel);
 
-  MatrixXf positions(3, 4);
-  MatrixXf normals(3, 4);
+    MatrixXf positions(3, 4);
+    MatrixXf normals(3, 4);
 
   positions.col(0) << sPoint + 2 * (sCross + sParallel);
   positions.col(1) << sPoint + 2 * (sCross - sParallel);
@@ -57,10 +60,50 @@ void Plane::render(GLShader &shader) {
   }
 
   shader.drawArray(GL_TRIANGLE_STRIP, 0, 4);
-#ifdef LEAK_PATCH_ON
-  shader.freeAttrib("in_position");
-  if (shader.attrib("in_normal", false) != -1) {
-    shader.freeAttrib("in_normal");
-  }
-#endif
+}
+
+MatrixXf Plane::get_position() {
+    Vector3f sPoint(point.x, point.y, point.z);
+    Vector3f sNormal(normal.x, normal.y, normal.z);
+    Vector3f sParallel(normal.y - normal.z, normal.z - normal.x,
+                       normal.x - normal.y);
+    sParallel.normalize();
+    Vector3f sCross = sNormal.cross(sParallel);
+
+    MatrixXf positions(3, 4);
+    MatrixXf normals(3, 4);
+
+    positions.col(0) << sPoint + 2 * (sCross + sParallel);
+    positions.col(1) << sPoint + 2 * (sCross - sParallel);
+    positions.col(2) << sPoint + 2 * (-sCross + sParallel);
+    positions.col(3) << sPoint + 2 * (-sCross - sParallel);
+
+  return positions;
+}
+
+
+MatrixXf Plane::get_normals() {
+    Vector3f sPoint(point.x, point.y, point.z);
+    Vector3f sNormal(normal.x, normal.y, normal.z);
+    Vector3f sParallel(normal.y - normal.z, normal.z - normal.x,
+                       normal.x - normal.y);
+    sParallel.normalize();
+    Vector3f sCross = sNormal.cross(sParallel);
+
+    MatrixXf positions(3, 4);
+    MatrixXf normals(3, 4);
+
+    normals.col(0) << sNormal;
+    normals.col(1) << sNormal;
+    normals.col(2) << sNormal;
+    normals.col(3) << sNormal;
+  return  normals;
+}
+
+Vector3D Plane::get_origin() {
+  return Vector3D(0.0, 0.0, 0.0);
+}
+
+double Plane::get_radius() {
+  return 0.0;
 }

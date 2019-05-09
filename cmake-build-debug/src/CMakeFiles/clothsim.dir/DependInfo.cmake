@@ -4,15 +4,15 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/camera.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/camera.cpp.o"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/cloth.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/cloth.cpp.o"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/clothMesh.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/clothMesh.cpp.o"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/clothSimulator.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/clothSimulator.cpp.o"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/collision/plane.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/collision/plane.cpp.o"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/collision/sphere.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/collision/sphere.cpp.o"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/main.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/main.cpp.o"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/misc/file_utils.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/misc/file_utils.cpp.o"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/src/misc/sphere_drawing.cpp" "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/misc/sphere_drawing.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/camera.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/camera.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/cloth.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/cloth.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/clothMesh.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/clothMesh.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/clothSimulator.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/clothSimulator.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/collision/plane.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/collision/plane.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/collision/sphere.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/collision/sphere.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/main.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/main.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/misc/file_utils.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/misc/file_utils.cpp.o"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/src/misc/sphere_drawing.cpp" "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/src/CMakeFiles/clothsim.dir/misc/sphere_drawing.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -37,8 +37,8 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
 
 # Targets to which this target links.
 set(CMAKE_TARGET_LINKED_INFO_FILES
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/CGL/src/CMakeFiles/CGL.dir/DependInfo.cmake"
-  "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui.dir/DependInfo.cmake"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/CGL/src/CMakeFiles/CGL.dir/DependInfo.cmake"
+  "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui.dir/DependInfo.cmake"
   )
 
 # Fortran module output directory.

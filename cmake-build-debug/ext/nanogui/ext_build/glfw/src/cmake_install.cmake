@@ -1,4 +1,4 @@
-# Install script for directory: /home/shenao/homework/cs184/p4-clothsim-zsano1/ext/nanogui/ext/glfw/src
+# Install script for directory: /home/shenao/osm-bundler/p4-clothsim-zsano1/ext/nanogui/ext/glfw/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

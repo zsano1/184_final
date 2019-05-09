@@ -43,10 +43,10 @@ RM = /home/shenao/下载/clion-2018.3.3/bin/cmake/linux/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/shenao/homework/cs184/p4-clothsim-zsano1
+CMAKE_SOURCE_DIR = /home/shenao/osm-bundler/p4-clothsim-zsano1
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug
+CMAKE_BINARY_DIR = /home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include ext/nanogui/CMakeFiles/nanogui.dir/depend.make
@@ -62,52 +62,52 @@ nanogui_OBJECTS =
 
 # External object files for target nanogui
 nanogui_EXTERNAL_OBJECTS = \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/ext/nanovg/src/nanovg.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/ext/glad/src/glad.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/nanogui_resources.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/glutil.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/common.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/widget.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/theme.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/layout.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/screen.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/label.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/window.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/popup.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/checkbox.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/button.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/popupbutton.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/combobox.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/progressbar.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/slider.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/messagedialog.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/textbox.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/imagepanel.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/imageview.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/vscrollpanel.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/colorwheel.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/colorpicker.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/graph.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/stackedwidget.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/tabheader.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/tabwidget.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/glcanvas.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/serializer.cpp.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/context.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/init.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/input.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/monitor.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/vulkan.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/window.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/x11_init.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/x11_monitor.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/x11_window.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/xkb_unicode.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/linux_joystick.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/posix_time.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/posix_tls.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/glx_context.c.o" \
-"/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/egl_context.c.o"
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/ext/nanovg/src/nanovg.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/ext/glad/src/glad.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/nanogui_resources.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/glutil.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/common.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/widget.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/theme.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/layout.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/screen.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/label.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/window.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/popup.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/checkbox.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/button.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/popupbutton.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/combobox.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/progressbar.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/slider.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/messagedialog.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/textbox.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/imagepanel.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/imageview.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/vscrollpanel.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/colorwheel.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/colorpicker.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/graph.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/stackedwidget.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/tabheader.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/tabwidget.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/glcanvas.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui-obj.dir/src/serializer.cpp.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/context.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/init.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/input.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/monitor.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/vulkan.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/window.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/x11_init.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/x11_monitor.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/x11_window.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/xkb_unicode.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/linux_joystick.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/posix_time.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/posix_tls.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/glx_context.c.o" \
+"/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/egl_context.c.o"
 
 ext/nanogui/libnanogui.so: ext/nanogui/CMakeFiles/nanogui-obj.dir/ext/nanovg/src/nanovg.c.o
 ext/nanogui/libnanogui.so: ext/nanogui/CMakeFiles/nanogui-obj.dir/ext/glad/src/glad.c.o
@@ -157,8 +157,8 @@ ext/nanogui/libnanogui.so: ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_object
 ext/nanogui/libnanogui.so: ext/nanogui/ext_build/glfw/src/CMakeFiles/glfw_objects.dir/egl_context.c.o
 ext/nanogui/libnanogui.so: ext/nanogui/CMakeFiles/nanogui.dir/build.make
 ext/nanogui/libnanogui.so: ext/nanogui/CMakeFiles/nanogui.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Linking CXX shared library libnanogui.so"
-	cd /home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nanogui.dir/link.txt --verbose=$(VERBOSE)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Linking CXX shared library libnanogui.so"
+	cd /home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/nanogui.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
 ext/nanogui/CMakeFiles/nanogui.dir/build: ext/nanogui/libnanogui.so
@@ -166,10 +166,10 @@ ext/nanogui/CMakeFiles/nanogui.dir/build: ext/nanogui/libnanogui.so
 .PHONY : ext/nanogui/CMakeFiles/nanogui.dir/build
 
 ext/nanogui/CMakeFiles/nanogui.dir/clean:
-	cd /home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui && $(CMAKE_COMMAND) -P CMakeFiles/nanogui.dir/cmake_clean.cmake
+	cd /home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui && $(CMAKE_COMMAND) -P CMakeFiles/nanogui.dir/cmake_clean.cmake
 .PHONY : ext/nanogui/CMakeFiles/nanogui.dir/clean
 
 ext/nanogui/CMakeFiles/nanogui.dir/depend:
-	cd /home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/shenao/homework/cs184/p4-clothsim-zsano1 /home/shenao/homework/cs184/p4-clothsim-zsano1/ext/nanogui /home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug /home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui /home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/shenao/osm-bundler/p4-clothsim-zsano1 /home/shenao/osm-bundler/p4-clothsim-zsano1/ext/nanogui /home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug /home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui /home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/ext/nanogui/CMakeFiles/nanogui.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : ext/nanogui/CMakeFiles/nanogui.dir/depend
 

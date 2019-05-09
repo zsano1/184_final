@@ -5,7 +5,6 @@
 #include <nanogui/nanogui.h>
 
 #include "clothSimulator.h"
-#include "leak_fix.h"
 
 #include "camera.h"
 #include "cloth.h"
@@ -22,13 +21,13 @@ using namespace std;
 
 Vector3D load_texture(int frame_idx, GLuint handle, const char* where) {
   Vector3D size_retval;
-  
+
   if (strlen(where) == 0) return size_retval;
-  
+
   glActiveTexture(GL_TEXTURE0 + frame_idx);
   glBindTexture(GL_TEXTURE_2D, handle);
-  
-  
+
+
   int img_x, img_y, img_n;
   unsigned char* img_data = stbi_load(where, &img_x, &img_y, &img_n, 3);
   size_retval.x = img_x;
@@ -41,7 +40,7 @@ Vector3D load_texture(int frame_idx, GLuint handle, const char* where) {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-  
+
   return size_retval;
 }
 
@@ -49,7 +48,7 @@ void load_cubemap(int frame_idx, GLuint handle, const std::vector<std::string>& 
   glActiveTexture(GL_TEXTURE0 + frame_idx);
   glBindTexture(GL_TEXTURE_CUBE_MAP, handle);
   for (int side_idx = 0; side_idx < 6; ++side_idx) {
-    
+
     int img_x, img_y, img_n;
     unsigned char* img_data = stbi_load(file_locs[side_idx].c_str(), &img_x, &img_y, &img_n, 3);
     glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + side_idx, 0, GL_RGB, img_x, img_y, 0, GL_RGB, GL_UNSIGNED_BYTE, img_data);
@@ -70,26 +69,26 @@ void ClothSimulator::load_textures() {
   glGenTextures(1, &m_gl_texture_3);
   glGenTextures(1, &m_gl_texture_4);
   glGenTextures(1, &m_gl_cubemap_tex);
-  
+
   m_gl_texture_1_size = load_texture(1, m_gl_texture_1, (m_project_root + "/textures/texture_1.png").c_str());
   m_gl_texture_2_size = load_texture(2, m_gl_texture_2, (m_project_root + "/textures/texture_2.png").c_str());
   m_gl_texture_3_size = load_texture(3, m_gl_texture_3, (m_project_root + "/textures/texture_3.png").c_str());
   m_gl_texture_4_size = load_texture(4, m_gl_texture_4, (m_project_root + "/textures/texture_4.png").c_str());
-  
+
   std::cout << "Texture 1 loaded with size: " << m_gl_texture_1_size << std::endl;
   std::cout << "Texture 2 loaded with size: " << m_gl_texture_2_size << std::endl;
   std::cout << "Texture 3 loaded with size: " << m_gl_texture_3_size << std::endl;
   std::cout << "Texture 4 loaded with size: " << m_gl_texture_4_size << std::endl;
-  
+
   std::vector<std::string> cubemap_fnames = {
-    m_project_root + "/textures/cube/posx.jpg",
-    m_project_root + "/textures/cube/negx.jpg",
-    m_project_root + "/textures/cube/posy.jpg",
-    m_project_root + "/textures/cube/negy.jpg",
-    m_project_root + "/textures/cube/posz.jpg",
-    m_project_root + "/textures/cube/negz.jpg"
+          m_project_root + "/textures/cube/posx.jpg",
+          m_project_root + "/textures/cube/negx.jpg",
+          m_project_root + "/textures/cube/posy.jpg",
+          m_project_root + "/textures/cube/negy.jpg",
+          m_project_root + "/textures/cube/posz.jpg",
+          m_project_root + "/textures/cube/negz.jpg"
   };
-  
+
   load_cubemap(5, m_gl_cubemap_tex, cubemap_fnames);
   std::cout << "Loaded cubemap texture" << std::endl;
 }
@@ -100,33 +99,33 @@ void ClothSimulator::load_shaders() {
   if (!success) {
     std::cout << "Error: Could not find the shaders folder!" << std::endl;
   }
-  
+
   std::string std_vert_shader = m_project_root + "/shaders/Default.vert";
-  
+
   for (const std::string& shader_fname : shader_folder_contents) {
     std::string file_extension;
     std::string shader_name;
-    
+
     FileUtils::split_filename(shader_fname, shader_name, file_extension);
-    
+
     if (file_extension != "frag") {
       std::cout << "Skipping non-shader file: " << shader_fname << std::endl;
       continue;
     }
-    
+
     std::cout << "Found shader file: " << shader_fname << std::endl;
-    
+
     // Check if there is a proper .vert shader or not for it
     std::string vert_shader = std_vert_shader;
     std::string associated_vert_shader_path = m_project_root + "/shaders/" + shader_name + ".vert";
     if (FileUtils::file_exists(associated_vert_shader_path)) {
       vert_shader = associated_vert_shader_path;
     }
-    
+
     GLShader nanogui_shader;
     nanogui_shader.initFromFiles(shader_name, vert_shader,
-                                  m_project_root + "/shaders/" + shader_fname);
-    
+                                 m_project_root + "/shaders/" + shader_fname);
+
     // Special filenames are treated a bit differently
     ShaderTypeHint hint;
     if (shader_name == "Wireframe") {
@@ -139,13 +138,13 @@ void ClothSimulator::load_shaders() {
       hint = ShaderTypeHint::PHONG;
       std::cout << "Type: Custom" << std::endl;
     }
-    
+
     UserShader user_shader(shader_name, nanogui_shader, hint);
-    
+
     shaders.push_back(user_shader);
     shaders_combobox_names.push_back(shader_name);
   }
-  
+
   // Assuming that it's there, use "Wireframe" by default
   for (size_t i = 0; i < shaders_combobox_names.size(); ++i) {
     if (shaders_combobox_names[i] == "Wireframe") {
@@ -156,9 +155,9 @@ void ClothSimulator::load_shaders() {
 }
 
 ClothSimulator::ClothSimulator(std::string project_root, Screen *screen)
-: m_project_root(project_root) {
+        : m_project_root(project_root) {
   this->screen = screen;
-  
+
   this->load_shaders();
   this->load_textures();
 
@@ -241,21 +240,19 @@ bool ClothSimulator::isAlive() { return is_alive; }
 
 void ClothSimulator::drawContents() {
   glEnable(GL_DEPTH_TEST);
+  // if (!is_paused) {
 
-  if (!is_paused) {
-    vector<Vector3D> external_accelerations = {gravity};
 
-    for (int i = 0; i < simulation_steps; i++) {
-      cloth->simulate(frames_per_sec, simulation_steps, cp, external_accelerations, collision_objects);
-    }
-  }
-
+  //for (int i = 0; i < simulation_steps; i++) {
+  //  cloth->simulate(frames_per_sec, simulation_steps, cp, external_accelerations, collision_objects, wind);
+  // }
+  // }
   // Bind the active shader
-
+  /*
   const UserShader& active_shader = shaders[active_shader_idx];
-
-  GLShader shader = active_shader.nanogui_shader;
-  shader.bind();
+   */
+//  GLShader shader = active_shader.nanogui_shader;
+//  shader.bind();
 
   // Prepare the camera projection matrix
 
@@ -267,19 +264,23 @@ void ClothSimulator::drawContents() {
 
   Matrix4f viewProjection = projection * view;
 
-  shader.setUniform("u_model", model);
-  shader.setUniform("u_view_projection", viewProjection);
+  //   shader.setUniform("u_model", model);
+  //   shader.setUniform("u_view_projection", viewProjection);
 
+  cloth -> simulate(frames_per_sec, simulation_steps, cp, gravity, collision_objects, wind, model, viewProjection, is_paused);
+  /*
   switch (active_shader.type_hint) {
-  case WIREFRAME:
-    shader.setUniform("u_color", color, false);
-    drawWireframe(shader);
-    break;
+      case WIREFRAME: {
+          shader.setUniform("u_information_texture", 6, false);
+          shader.setUniform("u_color", color, false);
+          drawWireframe(shader);
+          break;
+      }
   case NORMALS:
     drawNormals(shader);
     break;
   case PHONG:
-  
+
     // Others
     Vector3D cam_pos = camera.position();
     shader.setUniform("u_color", color, false);
@@ -295,10 +296,10 @@ void ClothSimulator::drawContents() {
     shader.setUniform("u_texture_2", 2, false);
     shader.setUniform("u_texture_3", 3, false);
     shader.setUniform("u_texture_4", 4, false);
-    
+
     shader.setUniform("u_normal_scaling", m_normal_scaling, false);
     shader.setUniform("u_height_scaling", m_height_scaling, false);
-    
+
     shader.setUniform("u_texture_cubemap", 5, false);
     drawPhong(shader);
     break;
@@ -307,14 +308,15 @@ void ClothSimulator::drawContents() {
   for (CollisionObject *co : *collision_objects) {
     co->render(shader);
   }
+ */
 }
 
 void ClothSimulator::drawWireframe(GLShader &shader) {
   int num_structural_springs =
-      2 * cloth->num_width_points * cloth->num_height_points -
-      cloth->num_width_points - cloth->num_height_points;
+          2 * cloth->num_width_points * cloth->num_height_points -
+          cloth->num_width_points - cloth->num_height_points;
   int num_shear_springs =
-      2 * (cloth->num_width_points - 1) * (cloth->num_height_points - 1);
+          2 * (cloth->num_width_points - 1) * (cloth->num_height_points - 1);
   int num_bending_springs = num_structural_springs - cloth->num_width_points -
                             cloth->num_height_points;
 
@@ -356,13 +358,10 @@ void ClothSimulator::drawWireframe(GLShader &shader) {
   //shader.setUniform("u_color", nanogui::Color(1.0f, 1.0f, 1.0f, 1.0f), false);
   shader.uploadAttrib("in_position", positions, false);
   // Commented out: the wireframe shader does not have this attribute
-  //shader.uploadAttrib("in_normal", normals);
+  // shader.uploadAttrib("in_normal", normals);
 
   shader.drawArray(GL_LINES, 0, num_springs * 2);
 
-#ifdef LEAK_PATCH_ON
-  shader.freeAttrib("in_position");
-#endif
 }
 
 void ClothSimulator::drawNormals(GLShader &shader) {
@@ -395,10 +394,6 @@ void ClothSimulator::drawNormals(GLShader &shader) {
   shader.uploadAttrib("in_normal", normals, false);
 
   shader.drawArray(GL_TRIANGLES, 0, num_tris * 3);
-#ifdef LEAK_PATCH_ON
-  shader.freeAttrib("in_position");
-  shader.freeAttrib("in_normal");
-#endif
 }
 
 void ClothSimulator::drawPhong(GLShader &shader) {
@@ -427,11 +422,11 @@ void ClothSimulator::drawPhong(GLShader &shader) {
     normals.col(i * 3    ) << n1.x, n1.y, n1.z, 0.0;
     normals.col(i * 3 + 1) << n2.x, n2.y, n2.z, 0.0;
     normals.col(i * 3 + 2) << n3.x, n3.y, n3.z, 0.0;
-    
+
     uvs.col(i * 3    ) << tri->uv1.x, tri->uv1.y;
     uvs.col(i * 3 + 1) << tri->uv2.x, tri->uv2.y;
     uvs.col(i * 3 + 2) << tri->uv3.x, tri->uv3.y;
-    
+
     tangents.col(i * 3    ) << 1.0, 0.0, 0.0, 1.0;
     tangents.col(i * 3 + 1) << 1.0, 0.0, 0.0, 1.0;
     tangents.col(i * 3 + 2) << 1.0, 0.0, 0.0, 1.0;
@@ -444,12 +439,6 @@ void ClothSimulator::drawPhong(GLShader &shader) {
   shader.uploadAttrib("in_tangent", tangents, false);
 
   shader.drawArray(GL_TRIANGLES, 0, num_tris * 3);
-#ifdef LEAK_PATCH_ON
-  shader.freeAttrib("in_position");
-  shader.freeAttrib("in_normal");
-  shader.freeAttrib("in_uv");
-  shader.freeAttrib("in_tangent");
-#endif
 }
 
 // ----------------------------------------------------------------------------
@@ -536,33 +525,33 @@ bool ClothSimulator::cursorPosCallbackEvent(double x, double y) {
 bool ClothSimulator::mouseButtonCallbackEvent(int button, int action,
                                               int modifiers) {
   switch (action) {
-  case GLFW_PRESS:
-    switch (button) {
-    case GLFW_MOUSE_BUTTON_LEFT:
-      left_down = true;
-      break;
-    case GLFW_MOUSE_BUTTON_MIDDLE:
-      middle_down = true;
-      break;
-    case GLFW_MOUSE_BUTTON_RIGHT:
-      right_down = true;
-      break;
-    }
-    return true;
+    case GLFW_PRESS:
+      switch (button) {
+        case GLFW_MOUSE_BUTTON_LEFT:
+          left_down = true;
+              break;
+        case GLFW_MOUSE_BUTTON_MIDDLE:
+          middle_down = true;
+              break;
+        case GLFW_MOUSE_BUTTON_RIGHT:
+          right_down = true;
+              break;
+      }
+          return true;
 
-  case GLFW_RELEASE:
-    switch (button) {
-    case GLFW_MOUSE_BUTTON_LEFT:
-      left_down = false;
-      break;
-    case GLFW_MOUSE_BUTTON_MIDDLE:
-      middle_down = false;
-      break;
-    case GLFW_MOUSE_BUTTON_RIGHT:
-      right_down = false;
-      break;
-    }
-    return true;
+    case GLFW_RELEASE:
+      switch (button) {
+        case GLFW_MOUSE_BUTTON_LEFT:
+          left_down = false;
+              break;
+        case GLFW_MOUSE_BUTTON_MIDDLE:
+          middle_down = false;
+              break;
+        case GLFW_MOUSE_BUTTON_RIGHT:
+          right_down = false;
+              break;
+      }
+          return true;
   }
 
   return false;
@@ -587,28 +576,28 @@ bool ClothSimulator::keyCallbackEvent(int key, int scancode, int action,
 
   if (action == GLFW_PRESS) {
     switch (key) {
-    case GLFW_KEY_ESCAPE:
-      is_alive = false;
-      break;
-    case 'r':
-    case 'R':
-      cloth->reset();
-      break;
-    case ' ':
-      resetCamera();
-      break;
-    case 'p':
-    case 'P':
-      is_paused = !is_paused;
-      break;
-    case 'n':
-    case 'N':
-      if (is_paused) {
-        is_paused = false;
-        drawContents();
-        is_paused = true;
-      }
-      break;
+      case GLFW_KEY_ESCAPE:
+        is_alive = false;
+            break;
+      case 'r':
+      case 'R':
+        cloth->reset();
+            break;
+      case ' ':
+        resetCamera();
+            break;
+      case 'p':
+      case 'P':
+        is_paused = !is_paused;
+            break;
+      case 'n':
+      case 'N':
+        if (is_paused) {
+          is_paused = false;
+          drawContents();
+          is_paused = true;
+        }
+            break;
     }
   }
 
@@ -634,7 +623,7 @@ bool ClothSimulator::resizeCallbackEvent(int width, int height) {
 
 void ClothSimulator::initGUI(Screen *screen) {
   Window *window;
-  
+
   window = new Window(screen, "Simulation");
   window->setPosition(Vector2i(default_window_size(0) - 245, 15));
   window->setLayout(new GroupLayout(15, 6, 14, 5));
@@ -649,21 +638,21 @@ void ClothSimulator::initGUI(Screen *screen) {
     b->setPushed(cp->enable_structural_constraints);
     b->setFontSize(14);
     b->setChangeCallback(
-        [this](bool state) { cp->enable_structural_constraints = state; });
+            [this](bool state) { cp->enable_structural_constraints = state; });
 
     b = new Button(window, "shearing");
     b->setFlags(Button::ToggleButton);
     b->setPushed(cp->enable_shearing_constraints);
     b->setFontSize(14);
     b->setChangeCallback(
-        [this](bool state) { cp->enable_shearing_constraints = state; });
+            [this](bool state) { cp->enable_shearing_constraints = state; });
 
     b = new Button(window, "bending");
     b->setFlags(Button::ToggleButton);
     b->setPushed(cp->enable_bending_constraints);
     b->setFontSize(14);
     b->setChangeCallback(
-        [this](bool state) { cp->enable_bending_constraints = state; });
+            [this](bool state) { cp->enable_bending_constraints = state; });
   }
 
   // Mass-spring parameters
@@ -673,7 +662,7 @@ void ClothSimulator::initGUI(Screen *screen) {
   {
     Widget *panel = new Widget(window);
     GridLayout *layout =
-        new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
+            new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
     layout->setColAlignment({Alignment::Maximum, Alignment::Fill});
     layout->setSpacing(0, 10);
     panel->setLayout(layout);
@@ -709,7 +698,7 @@ void ClothSimulator::initGUI(Screen *screen) {
   {
     Widget *panel = new Widget(window);
     GridLayout *layout =
-        new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
+            new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
     layout->setColAlignment({Alignment::Maximum, Alignment::Fill});
     layout->setSpacing(0, 10);
     panel->setLayout(layout);
@@ -743,7 +732,7 @@ void ClothSimulator::initGUI(Screen *screen) {
   {
     Widget *panel = new Widget(window);
     panel->setLayout(
-        new BoxLayout(Orientation::Horizontal, Alignment::Middle, 0, 5));
+            new BoxLayout(Orientation::Horizontal, Alignment::Middle, 0, 5));
 
     Slider *slider = new Slider(panel);
     slider->setValue(cp->damping);
@@ -756,11 +745,11 @@ void ClothSimulator::initGUI(Screen *screen) {
     percentage->setFontSize(14);
 
     slider->setCallback([percentage](float value) {
-      percentage->setValue(std::to_string(value));
+        percentage->setValue(std::to_string(value));
     });
     slider->setFinalCallback([&](float value) {
-      cp->damping = (double)value;
-      // cout << "Final slider value: " << (int)(value * 100) << endl;
+        cp->damping = (double)value;
+        // cout << "Final slider value: " << (int)(value * 100) << endl;
     });
   }
 
@@ -771,7 +760,7 @@ void ClothSimulator::initGUI(Screen *screen) {
   {
     Widget *panel = new Widget(window);
     GridLayout *layout =
-        new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
+            new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
     layout->setColAlignment({Alignment::Maximum, Alignment::Fill});
     layout->setSpacing(0, 10);
     panel->setLayout(layout);
@@ -809,7 +798,51 @@ void ClothSimulator::initGUI(Screen *screen) {
     fb->setSpinnable(true);
     fb->setCallback([this](float value) { gravity.z = value; });
   }
-  
+
+  new Label(window, "Wind", "sans-bold");
+
+  {
+    Widget *panel = new Widget(window);
+    GridLayout *layout =
+            new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
+    layout->setColAlignment({Alignment::Maximum, Alignment::Fill});
+    layout->setSpacing(0, 10);
+    panel->setLayout(layout);
+
+    new Label(panel, "x :", "sans-bold");
+
+    FloatBox<double> *fb = new FloatBox<double>(panel);
+    fb->setEditable(true);
+    fb->setFixedSize(Vector2i(100, 20));
+    fb->setFontSize(14);
+    fb->setValue(wind.x);
+    fb->setUnits("m/s^2");
+    fb->setSpinnable(true);
+    fb->setCallback([this](float value) { wind.x = value; });
+
+    new Label(panel, "y :", "sans-bold");
+
+    fb = new FloatBox<double>(panel);
+    fb->setEditable(true);
+    fb->setFixedSize(Vector2i(100, 20));
+    fb->setFontSize(14);
+    fb->setValue(wind.y);
+    fb->setUnits("m/s^2");
+    fb->setSpinnable(true);
+    fb->setCallback([this](float value) { wind.y = value; });
+
+    new Label(panel, "z :", "sans-bold");
+
+    fb = new FloatBox<double>(panel);
+    fb->setEditable(true);
+    fb->setFixedSize(Vector2i(100, 20));
+    fb->setFontSize(14);
+    fb->setValue(wind.z);
+    fb->setUnits("m/s^2");
+    fb->setSpinnable(true);
+    fb->setCallback([this](float value) { wind.z = value; });
+  }
+
   window = new Window(screen, "Appearance");
   window->setPosition(Vector2i(15, 15));
   window->setLayout(new GroupLayout(15, 6, 14, 5));
@@ -817,12 +850,10 @@ void ClothSimulator::initGUI(Screen *screen) {
   // Appearance
 
   {
-    
-    
     ComboBox *cb = new ComboBox(window, shaders_combobox_names);
     cb->setFontSize(14);
     cb->setCallback(
-        [this, screen](int idx) { active_shader_idx = idx; });
+            [this, screen](int idx) { active_shader_idx = idx; });
     cb->setSelectedIndex(active_shader_idx);
   }
 
@@ -834,7 +865,7 @@ void ClothSimulator::initGUI(Screen *screen) {
     ColorWheel *cw = new ColorWheel(window, color);
     cw->setColor(this->color);
     cw->setCallback(
-        [this](const nanogui::Color &color) { this->color = color; });
+            [this](const nanogui::Color &color) { this->color = color; });
   }
 
   new Label(window, "Parameters", "sans-bold");
@@ -842,7 +873,7 @@ void ClothSimulator::initGUI(Screen *screen) {
   {
     Widget *panel = new Widget(window);
     GridLayout *layout =
-        new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
+            new GridLayout(Orientation::Horizontal, 2, Alignment::Middle, 5, 5);
     layout->setColAlignment({Alignment::Maximum, Alignment::Fill});
     layout->setSpacing(0, 10);
     panel->setLayout(layout);

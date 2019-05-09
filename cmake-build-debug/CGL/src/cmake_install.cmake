@@ -1,4 +1,4 @@
-# Install script for directory: /home/shenao/homework/cs184/p4-clothsim-zsano1/CGL/src
+# Install script for directory: /home/shenao/osm-bundler/p4-clothsim-zsano1/CGL/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,6 +38,6 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/shenao/homework/cs184/p4-clothsim-zsano1/cmake-build-debug/CGL/src/libCGL.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/shenao/osm-bundler/p4-clothsim-zsano1/cmake-build-debug/CGL/src/libCGL.a")
 endif()
 
